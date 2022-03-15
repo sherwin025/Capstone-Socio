@@ -43,6 +43,7 @@ export const CreateCommunity = (community) => {
         },
         body: JSON.stringify(community)
      })
+     .then(res => res.json())
 }
 
 

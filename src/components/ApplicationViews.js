@@ -1,6 +1,8 @@
 import React from "react"
 import { Route } from "react-router-dom"
+import { CommunityDetails } from "./Community./CommunityDetail"
 import { CommunityPage } from "./Community./communitypage"
+import { CommunityForm } from "./Community./newcommunityform"
 import { Homepage } from "./homepage/homepage"
 
 export const ApplicationViews = () => {
@@ -11,6 +13,12 @@ export const ApplicationViews = () => {
             </Route>
             <Route exact path="/communities">
                 <CommunityPage />
+            </Route>
+            <Route exact path="/newcommunity">
+                <CommunityForm />
+            </Route>
+            <Route path="/communities/:communityid(\d+)">
+                <CommunityDetails />
             </Route>
         </>
     )

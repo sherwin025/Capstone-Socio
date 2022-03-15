@@ -7,6 +7,15 @@ export const getAnnouncement = () => {
         .then(res => res.json())
 }
 
+export const getCommunityAnnouncement = (id) => {
+    return fetch(`http://localhost:8000/announcements?community=${id}`, {
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }
+    })
+        .then(res => res.json())
+}
+
 export const getSingleannouncement = (id) => {
     return fetch(`http://localhost:8000/announcements/${id}`, {
         headers: {

@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect} from "react"
+import { Link } from "react-router-dom"
 import { searchPublicCommunity, getCommunity } from "../requesthandlers/communitymanager"
 import { checkcommunitymember, createcommunitymember, Deletecommunitymember } from "../requesthandlers/communitymembermanager"
 
 export const AllCommunities = () => {
     const [community, setcommunity] = useState([])
     const [search, setsearch] = useState("")
-    const [communitymembers, setmembers] = useState([])
     useEffect(() => {
-        getCommunity().then(res => setcommunity(res))
+        getpagerender()
     }, [])
-
 
     useEffect(() => {
         searchPublicCommunity(search).then(res => setcommunity(res))
@@ -19,44 +18,36 @@ export const AllCommunities = () => {
         setsearch(event.target.value)
     }
 
-    const checkmembership = (event) => {
-        for (const member of event.members) {
-            if (member.member === parseInt(localStorage.getItem("member")) && member.approved === true) {
-                return 1
-            } else {
-                return 0
-            }
-        }
-
+    const checkmembership = (community) => {
+        return community.members.some((member)=>member.member === parseInt(localStorage.getItem("member")) && member.approved === true) 
     }
 
-    const checkjoin = (event) => {
-        checkcommunitymember(localStorage.getItem("member"), event.id)
-        .then(res=> {
-            if (res.length >= 1){
-                return true
-            } else {
-                return false
-            }
-        })
+    const checkjoin = (community) => {
+        return community.members.some((member)=>member.member === parseInt(localStorage.getItem("member")))
     }
 
-    const Cancelcommunityjoin = (event) => {
-        return checkcommunitymember(localStorage.getItem("member"), event.id)
+
+    const Cancelcommunityjoin = (community) => {
+        return checkcommunitymember(localStorage.getItem("member"), community.id)
             .then(res => {
-                Deletecommunitymember(res.id)
-
+                for (const item of res) {
+                    Deletecommunitymember(item.id)
+                }
             })
     }
 
-    const sendrequest = (id) => {
+    const sendrequest = (event) => {
         return createcommunitymember({
             "member": localStorage.getItem("member"),
-            "community": id.id,
+            "community": event.id,
             "admin": "false",
             "approved": "false"
         })
     }
+
+        const getpagerender = () => {
+            getCommunity().then(res => setcommunity(res))
+        }
 
     return (<>
         <div className="eventcontainer">
@@ -64,21 +55,21 @@ export const AllCommunities = () => {
             <input onChange={searchfunction} type="text" placeholder="Search Term" />
 
             {
-                community.map((event) => {
-                    return <div className="indevent">
-                        <div className="communitynameevent">{event.name} </div>
+                community.map((community) => {
+                    return <div className="indcommunity">
+                        <div className="communitynamecommunity">{community.name} </div>
                         {
-                            checkmembership(event) ? "" :
-                                checkjoin(event) ?
-                                    <button onClick={() => Cancelcommunityjoin(event)}> Cancel Request </button> :
-                                    <button onClick={() => sendrequest(event)}> Request Join Group </button>
+                            checkmembership(community) ? "" :
+                                checkjoin(community) ?
+                                <button onClick={() => Cancelcommunityjoin(community).then(getpagerender)}> Cancel Request </button> :
+                                <button onClick={() => sendrequest(community).then(getpagerender)}> Request Join Group </button> 
                         }
                     </div>
                 }
                 )
             }
 
-            <button>Create a new Community</button>
+            <Link to="./newcommunity" >Create a new Community</Link>
 
         </div>
 

@@ -58,3 +58,12 @@ export const Deletecommunitymember = (id) => {
         }
      })
 }
+
+export const getAllCommunityMembers = (id) => {
+    return fetch(`http://localhost:8000/communitymember?community=${id}`, {
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("token")}`,
+            "Content-Type": `application/json`
+        },
+     }).then(res => res.json())
+}

@@ -7,6 +7,15 @@ export const getEvents = () => {
         .then(res => res.json())
 }
 
+export const getCommunityEvents = (id) => {
+    return fetch(`http://localhost:8000/events?community=${id}`, {
+        headers: {
+            "Authorization": `Token ${localStorage.getItem("token")}`
+        }
+    })
+        .then(res => res.json())
+}
+
 export const getSingleEvent = (id) => {
     return fetch(`http://localhost:8000/events/${id}`, {
         headers: {

@@ -10,7 +10,7 @@ export const Announcementshomepage = () => {
 
     return (<> 
     <div className="eventcontainer">
-    Your Community Announcements
+    Local Community Announcements
     {
         announ.length >= 1? 
         announ.map((event)=> {
