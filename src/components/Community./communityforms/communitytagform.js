@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
-import { getTags } from "../requesthandlers/tagmanager"
+import { getTags } from "../../requesthandlers/tagmanager"
 
 
 export const NewCommunityTagComponent = ({selectedtags,setselectedtags}) => {

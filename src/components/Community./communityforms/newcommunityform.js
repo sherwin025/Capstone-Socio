@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
-import { CreateCommunity } from "../requesthandlers/communitymanager"
-import { createcommunitymember } from "../requesthandlers/communitymembermanager"
-import { createCommunityTags, createTags, getTags } from "../requesthandlers/tagmanager"
+import { CreateCommunity } from "../../requesthandlers/communitymanager"
+import { createcommunitymember } from "../../requesthandlers/communitymembermanager"
+import { createCommunityTags, createTags, getTags } from "../../requesthandlers/tagmanager"
 import { NewCommunityTagComponent } from "./communitytagform"
 
 export const CommunityForm = () => {

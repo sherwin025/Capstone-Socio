@@ -34,6 +34,7 @@ export const createEvent = (event) => {
         },
         body: JSON.stringify(event)
      })
+     .then(res => res.json())
 }
 
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import { getCommunity, getUserCommunity } from "../requesthandlers/communitymanager"
 
 export const Communityhomepage = () => {
@@ -15,7 +16,7 @@ export const Communityhomepage = () => {
         community.length >= 1? 
         community.map((event)=> {
             return <div className="indevent">
-                <div className="communitynameevent">{event.name} </div>
+                <div className="communitynameevent"><Link to={`/communities/${event.id}`}> {event.name} </Link></div>
             </div>
         }
         )

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import { getEvents } from "../requesthandlers/eventmanager"
 
 export const HomePageEvents = () => {
@@ -15,7 +16,7 @@ export const HomePageEvents = () => {
         events.length >= 1? 
         events.map((event)=> {
             return <div className="indevent">
-                <div className="communitynameevent">{event.community?.name} </div>
+                <div className="communitynameevent"> <Link to={`./communities/${event.community?.id}`}>{event.community?.name}</Link> </div>
                 <div className="homevent"> {event.name}</div>
                 <div className="homevent"> {event.date}</div>
                 <div className="homevent"> {event.time}</div>

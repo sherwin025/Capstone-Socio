@@ -7,23 +7,15 @@ export const getCommunityMessages = (id) => {
         .then(res => res.json())
 }
 
-export const getCommunityTags = (id) => {
-    return fetch(`http://localhost:8000/communitytags?community=${id}`, {
-        headers: {
-            "Authorization": `Token ${localStorage.getItem("token")}`
-        }
-    })
-        .then(res => res.json())
-}
 
-export const createCommunityTags = (commtag) => {
-    return fetch("http://localhost:8000/communitytags", {
+export const createcommunitymessage = (message) => {
+    return fetch("http://localhost:8000/messageboard", {
         method: "POST",
         headers: {
             "Authorization": `Token ${localStorage.getItem("token")}`,
             "Content-Type": `application/json`
         },
-        body: JSON.stringify(commtag)
+        body: JSON.stringify(message)
     })
 }
 
