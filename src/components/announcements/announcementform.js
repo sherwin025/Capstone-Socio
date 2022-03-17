@@ -56,7 +56,7 @@ export const AnnouncementForm = () => {
                 <input ref={comments} type="checkbox" id="public" className="form-control" />
             </fieldset>
             <fieldset>
-                <button onClick={CreateAnnouncement}> Create Event </button>
+                <button onClick={CreateAnnouncement}> Create Announcement </button>
             </fieldset>
         </form>
         <button onClick={() => history.push(`/communities/${communityid}`)}> Back to Community</button>

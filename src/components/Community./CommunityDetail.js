@@ -49,7 +49,7 @@ export const CommunityDetails = () => {
                 Joined Users:
                 {
                     members.map(each => {
-                        return <div>{each.member?.user?.username}</div>
+                        return <div> {each.approved ? each.member?.user?.username: ""}</div>
                     })
                 }
             </div>

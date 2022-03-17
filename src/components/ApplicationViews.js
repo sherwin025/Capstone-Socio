@@ -7,6 +7,9 @@ import { Homepage } from "./homepage/homepage"
 import { EventForm } from "./events/eventform"
 import { AnnouncementForm } from "./announcements/announcementform"
 import { CommunityAdmin } from "./Community./Communityadmin"
+import { UserPage } from "./users/user"
+import { DirectMessaages } from "./messages/DirectMessage"
+import { MessageForm } from "./messages/MessageForm"
 
 
 export const ApplicationViews = () => {
@@ -18,8 +21,17 @@ export const ApplicationViews = () => {
             <Route exact path="/communities">
                 <CommunityPage />
             </Route>
+            <Route exact path="/users">
+                <UserPage />
+            </Route>
             <Route exact path="/newcommunity">
                 <CommunityForm />
+            </Route>
+            <Route exact path="/messages/new">
+                <MessageForm />
+            </Route>
+            <Route exact path="/messages">
+                <DirectMessaages />
             </Route>
             <Route exact path="/communities/:communityid(\d+)">
                 <CommunityDetails />
