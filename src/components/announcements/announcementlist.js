@@ -149,7 +149,9 @@ export const CommunityAnnouncementList = ({ communityid }) => {
                     return Announcement.approved === true ?
                         <div>
                             <div>{Announcement.name}</div>
+                            <div>{Announcement.title}</div>
                             <div>{Announcement.details}</div>
+                            {Announcement.image ? <div><img src={`http://localhost:8000${Announcement.image}`}></img></div>: ""}
                             <div>{Announcement.comments ? <button onClick={() => {
                                 setannouncementtosee(Announcement)
                                 togglecomments()

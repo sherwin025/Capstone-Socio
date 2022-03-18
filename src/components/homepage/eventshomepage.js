@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { getEvents } from "../requesthandlers/eventmanager"
 
-export const HomePageEvents = () => {
+export const HomePageEvents = ({parent}) => {
     const [events, setevents] = useState([])
 
     useEffect(()=>{
@@ -11,16 +11,21 @@ export const HomePageEvents = () => {
 
     return (<> 
     <div className="eventcontainer">
-    Local Community Events
+    {parent ?  "Kids Events" : "Your local Communtiy Events" }
     {
         events.length >= 1? 
         events.map((event)=> {
-            return <div className="indevent">
+            return parent? event.approved & event.public & event.community?.parentportal ? <div className="indevent">
                 <div className="communitynameevent"> <Link to={`./communities/${event.community?.id}`}>{event.community?.name}</Link> </div>
                 <div className="homevent"> {event.name}</div>
                 <div className="homevent"> {event.date}</div>
                 <div className="homevent"> {event.time}</div>
-            </div>
+            </div> : "" : event.approved? <div className="indevent">
+                <div className="communitynameevent"> <Link to={`./communities/${event.community?.id}`}>{event.community?.name}</Link> </div>
+                <div className="homevent"> {event.name}</div>
+                <div className="homevent"> {event.date}</div>
+                <div className="homevent"> {event.time}</div>
+            </div>: ""
         }
         )
         : 

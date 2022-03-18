@@ -5,7 +5,6 @@ import { getCommunity } from "../requesthandlers/communitymanager"
 import { createEvent, joinEvent } from "../requesthandlers/eventmanager"
 
 export const EventForm = () => {
-    const [newEvent, setNewEvent] = useState({})
     const { communityid } = useParams()
     const history = useHistory()
     const name = useRef()
@@ -13,11 +12,24 @@ export const EventForm = () => {
     const address = useRef()
     const date = useRef()
     const time = useRef()
-    const approved = useRef("False")
     const ispublic = useRef("False")
     const isactivity = useRef("False")
     const zipcode = useRef()
+    const [base64string, setbase] = useState(null)
 
+    const getBase64 = (file, callback) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(file);
+    }
+
+    const createGameImageString = (event) => {
+        getBase64(event.target.files[0], (base64ImageString) => {
+            console.log("Base64 of file is", base64ImageString);
+
+            setbase(base64ImageString)
+        });
+    }
 
     const CreateEvent = (e) => {
         e.preventDefault()
@@ -31,12 +43,13 @@ export const EventForm = () => {
             "date": date.current.value,
             "time": time.current.value,
             "approved": false,
-            "community": communityid
+            "community": communityid,
+            "image": base64string
         }
 
         return createEvent(eventobj)
             .then(res => { joinEvent(res.id) })
-            .then(()=>{
+            .then(() => {
                 history.push(`/communities/${communityid}`)
             })
     }
@@ -48,6 +61,9 @@ export const EventForm = () => {
 
             <fieldset >
                 <input ref={name} type="text" id="communityname" className="form-control" placeholder="Event Name" required />
+            </fieldset>
+            <fieldset>
+                <input type="file" id="image" onChange={createGameImageString} />
             </fieldset>
             <fieldset>
                 <input ref={details} type="text" id="communityabout" className="form-control" placeholder="Event Details" required />

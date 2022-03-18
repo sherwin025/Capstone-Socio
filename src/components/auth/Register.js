@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
 
 export const Register = (props) => {
@@ -12,9 +12,23 @@ export const Register = (props) => {
     const details = useRef()
     const zipcode = useRef()
     const parent = useRef("False")
-    const image = useRef()
+    const [base64string, setbase] = useState(null)
 
     const history = useHistory()
+
+    const getBase64 = (file, callback) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(file);
+    }
+
+    const createGameImageString = (event) => {
+        getBase64(event.target.files[0], (base64ImageString) => {
+            console.log("Base64 of file is", base64ImageString);
+
+            setbase(base64ImageString)
+        });
+    }
 
     const handleRegister = (e) => {
         e.preventDefault()
@@ -30,7 +44,7 @@ export const Register = (props) => {
                 "details": details.current.value,
                 "zipcode": zipcode.current.value,
                 "parent": parent.current.checked,
-                "image": image.current.value
+                "image": base64string
             }
 
             return fetch("http://127.0.0.1:8000/register", {
@@ -69,7 +83,8 @@ export const Register = (props) => {
                 <h1 className="h3 mb-3 font-weight-normal">Join Socio today</h1>
                 <fieldset>
                     <label htmlFor="profileimage"> Profile Image </label>
-                    <input ref={image} type="text" id="profileimage" className="form-control" placeholder="profile Image" />
+                    <input type="file" id="userimage" onChange={createGameImageString} />
+
                 </fieldset>
                 <fieldset>
                     <label htmlFor="name"> Username: </label>
@@ -80,7 +95,7 @@ export const Register = (props) => {
                 </fieldset>
                 <fieldset>
                     <label htmlFor="email"> Email: </label>
-                    <input  ref={email} type="email" id="email" className="form-control" placeholder="Email" required />
+                    <input ref={email} type="email" id="email" className="form-control" placeholder="Email" required />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="firstname"> First Name: </label>
@@ -88,11 +103,11 @@ export const Register = (props) => {
                 </fieldset>
                 <fieldset>
                     <label htmlFor="lastname"> Last Name: </label>
-                    <input  ref={last_name} type="text" id="lastname" className="form-control" placeholder="Last Name" required />
+                    <input ref={last_name} type="text" id="lastname" className="form-control" placeholder="Last Name" required />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="bio"> Bio: </label>
-                    <input  ref={details} type="text" id="bio" className="form-control" placeholder="Short statement about yourself" required />
+                    <input ref={details} type="text" id="bio" className="form-control" placeholder="Short statement about yourself" required />
                 </fieldset>
                 <fieldset>
                     <label htmlFor="zipcode"> Zipcode: </label>

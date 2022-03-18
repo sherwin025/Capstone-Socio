@@ -10,6 +10,8 @@ import { CommunityAdmin } from "./Community./Communityadmin"
 import { UserPage } from "./users/user"
 import { DirectMessaages } from "./messages/DirectMessage"
 import { MessageForm } from "./messages/MessageForm"
+import { UserMessageForm } from "./messages/usermessageform"
+import { ParentPortal } from "./parentportal/ParentPortal"
 
 
 export const ApplicationViews = () => {
@@ -33,6 +35,10 @@ export const ApplicationViews = () => {
             <Route exact path="/messages">
                 <DirectMessaages />
             </Route>
+            <Route path="/messages/new/:userid(\d+)">
+                <UserMessageForm />
+            </Route>
+
             <Route exact path="/communities/:communityid(\d+)">
                 <CommunityDetails />
             </Route>
@@ -44,6 +50,9 @@ export const ApplicationViews = () => {
             </Route>
             <Route path="/announcements/new/:communityid(\d+)">
                 <AnnouncementForm />
+            </Route>
+            <Route path="/parents" >
+                <ParentPortal />
             </Route>
         </>
     )

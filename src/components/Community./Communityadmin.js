@@ -84,7 +84,9 @@ export const CommunityAdmin = () => {
                 {
                     Announcements.map(each => {
                         return <div> {each.approved ? "" : <div>
+                            <div> {each.title}</div>
                             <div> {each.details}</div>
+                            {each.image ? <div><img src={`http://localhost:8000${each.image}`}></img></div>: ""}
                             <div> by: {each.member?.user?.username}</div>
                             <div><button onClick={() => approveannouncement(each)} > Approve</button></div>
                             <div><button onClick={() => Deleteannouncement(each.id).then(() => setnewinfo(!newinfo))}> Deny</button></div>
@@ -99,6 +101,9 @@ export const CommunityAdmin = () => {
                         return <div> {each.approved ? "" : <div>
                             <div> {each.name}</div>
                             <div> {each.details}</div>
+                            <div> {each.date}</div>
+                            <div> {each.time}</div>
+                            {each.image ? <div><img src={`http://localhost:8000${each.image}`}></img></div>: ""}
                             <div> by: {each.member?.user?.username}</div>
                             <div><button onClick={() => approveevent(each)}> Approve</button></div>
                             <div><button onClick={() => DeleteEvent(each.id).then(() => setnewinfo(!newinfo))}> Deny</button></div>
@@ -106,7 +111,7 @@ export const CommunityAdmin = () => {
                     })
                 }
             </div>
-
+            <Link to="./"><button>Back to main</button> </Link>
         </div>
 
     </>)

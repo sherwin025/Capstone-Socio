@@ -5,7 +5,6 @@ import { createannouncement } from "../requesthandlers/announcementmanager"
 
 
 export const AnnouncementForm = () => {
-    const [newAnnouncement, setNewAnnouncement] = useState({})
     const { communityid } = useParams()
     const history = useHistory()
     const title = useRef()
@@ -13,6 +12,21 @@ export const AnnouncementForm = () => {
     const ispublic = useRef("False")
     const comments = useRef("False")
     const zipcode = useRef()
+    const [base64string, setbase] = useState(null)
+
+    const getBase64 = (file, callback) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(file);
+    }
+
+    const createGameImageString = (event) => {
+        getBase64(event.target.files[0], (base64ImageString) => {
+            console.log("Base64 of file is", base64ImageString);
+
+            setbase(base64ImageString)
+        });
+    }
 
 
     const CreateAnnouncement = (e) => {
@@ -24,11 +38,12 @@ export const AnnouncementForm = () => {
             "comments": comments.current.checked,
             "zipcode": zipcode.current.value,
             "approved": false,
-            "community": communityid
+            "community": communityid,
+            "image": base64string
         }
 
         return createannouncement(announcementobj)
-            .then(()=>{
+            .then(() => {
                 history.push(`/communities/${communityid}`)
             })
     }
@@ -37,7 +52,9 @@ export const AnnouncementForm = () => {
         <form>
             <h3> New Announcement </h3>
             <h6>all announcements posted pending approval  </h6>
-
+            <fieldset>
+                <input type="file" id="userimage" onChange={createGameImageString} />
+            </fieldset>
             <fieldset >
                 <input ref={title} type="text" id="communityname" className="form-control" placeholder="Title" required />
             </fieldset>

@@ -110,6 +110,9 @@ export const CommunityEventList = ({ communityid }) => {
                         <div>
                             <div>{event.name}</div>
                             <div>{event.details}</div>
+                            <div>{event.date}</div>
+                            <div>{event.time}</div>
+                            {event.image ? <div><img src={`http://localhost:8000${event.image}`}></img></div>: ""}
                             <div>attending count : {event.attending_count}</div>
                             <div> {event.member?.id === parseInt(localStorage.getItem("member")) ?
                                 <div>

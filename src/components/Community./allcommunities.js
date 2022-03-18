@@ -3,9 +3,10 @@ import { Link } from "react-router-dom"
 import { searchPublicCommunity, getCommunity } from "../requesthandlers/communitymanager"
 import { checkcommunitymember, createcommunitymember, Deletecommunitymember } from "../requesthandlers/communitymembermanager"
 
-export const AllCommunities = () => {
+export const AllCommunities = ({parent}) => {
     const [community, setcommunity] = useState([])
     const [search, setsearch] = useState("")
+    
     useEffect(() => {
         getpagerender()
     }, [])
@@ -56,7 +57,15 @@ export const AllCommunities = () => {
 
             {
                 community.map((community) => {
-                    return <div className="indcommunity">
+                    return parent ? community.parentportal ? <div className="indcommunity">
+                        <div className="communitynamecommunity">{community.name} </div>
+                        {
+                            checkmembership(community) ? "" :
+                                checkjoin(community) ?
+                                <button onClick={() => Cancelcommunityjoin(community).then(getpagerender)}> Cancel Request </button> :
+                                <button onClick={() => sendrequest(community).then(getpagerender)}> Request Join Group </button> 
+                        }
+                    </div> : "" : <div className="indcommunity">
                         <div className="communitynamecommunity">{community.name} </div>
                         {
                             checkmembership(community) ? "" :
