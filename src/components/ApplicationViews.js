@@ -12,6 +12,7 @@ import { DirectMessaages } from "./messages/DirectMessage"
 import { MessageForm } from "./messages/MessageForm"
 import { UserMessageForm } from "./messages/usermessageform"
 import { ParentPortal } from "./parentportal/ParentPortal"
+import { BusinessComponent } from "./Business/businesscomponent"
 
 
 export const ApplicationViews = () => {
@@ -53,6 +54,9 @@ export const ApplicationViews = () => {
             </Route>
             <Route path="/parents" >
                 <ParentPortal />
+            </Route>
+            <Route path="/business" >
+                <BusinessComponent />
             </Route>
         </>
     )

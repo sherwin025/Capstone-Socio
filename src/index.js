@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Socio } from './components/Socio';
-import './index.css';
-
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+import "./index.css"
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

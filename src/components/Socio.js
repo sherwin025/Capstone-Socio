@@ -13,7 +13,6 @@ export const Socio = () => {
         if (localStorage.getItem("member")) {
           return (
             <>
-            <h1>Socio</h1>
               <NavBar />
               <ApplicationViews />
             </>
