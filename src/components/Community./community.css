@@ -1,0 +1,95 @@
+.communitylayout {
+    display: flex;
+    justify-content: space-around;
+}
+
+.allcommunitiessearch {
+    width: 50vw;
+    margin-top: 20px;
+    text-align: center;
+    border: 5px grey solid;
+    background-color: whitesmoke;
+    padding: 30px;
+    overflow-y:auto;
+    height: 700px;
+    text-align: center;
+}
+
+.searchbox{
+    border: 1px solid grey;
+    border-radius: 5px;
+    height: 20px;
+    width: 35%;
+    padding: 2px 23px 2px 30px;
+    outline: 0;
+    background-color: #f5f5f5;
+    margin-bottom: 20px;
+}
+
+.indcommunity{
+    padding: 10px;
+    margin: 10px 10px;
+    border: solid 2px gray;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    height: auto;
+    border-radius: 10%;
+    padding: 2%;
+
+}
+
+.communityimage {
+    width: 30%;
+    height: auto;
+    margin: 10px;
+}
+
+.commcards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.joinleavecomm {
+  align-items: center;
+  appearance: none;
+  background-color: #3EB2FD;
+  background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd,sans-serif;
+  font-size: .7rem;
+  height: auto;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s,background-position .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.joinleavecomm:active,
+.joinleavecomm:focus {
+  outline: none;
+}
+
+.joinleavecomm:hover {
+  background-position: -20px -20px;
+}
+
+.joinleavecomm:focus:not(:active) {
+  box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+}

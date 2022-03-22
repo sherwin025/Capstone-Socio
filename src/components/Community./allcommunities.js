@@ -1,12 +1,12 @@
-import React, { useState, useEffect} from "react"
+import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { searchPublicCommunity, getCommunity } from "../requesthandlers/communitymanager"
 import { checkcommunitymember, createcommunitymember, Deletecommunitymember } from "../requesthandlers/communitymembermanager"
 
-export const AllCommunities = ({parent}) => {
+export const AllCommunities = ({ parent }) => {
     const [community, setcommunity] = useState([])
     const [search, setsearch] = useState("")
-    
+
     useEffect(() => {
         getpagerender()
     }, [])
@@ -20,11 +20,11 @@ export const AllCommunities = ({parent}) => {
     }
 
     const checkmembership = (community) => {
-        return community.members.some((member)=>member.member === parseInt(localStorage.getItem("member")) && member.approved === true) 
+        return community.members.some((member) => member.member === parseInt(localStorage.getItem("member")) && member.approved === true)
     }
 
     const checkjoin = (community) => {
-        return community.members.some((member)=>member.member === parseInt(localStorage.getItem("member")))
+        return community.members.some((member) => member.member === parseInt(localStorage.getItem("member")))
     }
 
 
@@ -46,38 +46,40 @@ export const AllCommunities = ({parent}) => {
         })
     }
 
-        const getpagerender = () => {
-            getCommunity().then(res => setcommunity(res))
-        }
+    const getpagerender = () => {
+        getCommunity().then(res => setcommunity(res))
+    }
 
     return (<>
-        <div className="eventcontainer">
+        <div className="allcommunitiessearch">
+            <input className="searchbox" onChange={searchfunction} type="text" placeholder="Search Communities" />
 
-            <input onChange={searchfunction} type="text" placeholder="Search Term" />
-
-            {
-                community.map((community) => {
-                    return parent ? community.parentportal ? <div className="indcommunity">
-                        <div className="communitynamecommunity">{community.name} </div>
-                        {
-                            checkmembership(community) ? "" :
-                                checkjoin(community) ?
-                                <button onClick={() => Cancelcommunityjoin(community).then(getpagerender)}> Cancel Request </button> :
-                                <button onClick={() => sendrequest(community).then(getpagerender)}> Request Join Group </button> 
-                        }
-                    </div> : "" : <div className="indcommunity">
-                        <div className="communitynamecommunity">{community.name} </div>
-                        {
-                            checkmembership(community) ? "" :
-                                checkjoin(community) ?
-                                <button onClick={() => Cancelcommunityjoin(community).then(getpagerender)}> Cancel Request </button> :
-                                <button onClick={() => sendrequest(community).then(getpagerender)}> Request Join Group </button> 
-                        }
-                    </div>
+            <div className="commcards">
+                {
+                    community.map((community) => {
+                        return parent ? community.parentportal ? <div className="indcommunity">
+                            <div>{community.image ? <img className="communityimage" src={`http://localhost:8000${community.image}`}></img> : ""}</div>
+                            <Link to={`/communities/${community.id}`}><div className="communitynamecommunity">{community.name} </div></Link>
+                            {
+                                checkmembership(community) ? "" :
+                                    checkjoin(community) ?
+                                        <button className="joinleavecomm" onClick={() => Cancelcommunityjoin(community).then(getpagerender)}> Cancel Request </button> :
+                                        <button className="joinleavecomm" onClick={() => sendrequest(community).then(getpagerender)}> Request Join Group </button>
+                            }
+                        </div> : "" : <div className="indcommunity">
+                            <div>{community.image ? <img className="communityimage" src={`http://localhost:8000${community.image}`}></img> : ""}</div>
+                            <Link to={`/communities/${community.id}`}><div className="communitynamecommunity">{community.name} </div></Link>
+                            {
+                                checkmembership(community) ? "" :
+                                    checkjoin(community) ?
+                                        <button className="joinleavecomm" onClick={() => Cancelcommunityjoin(community).then(getpagerender)}> Cancel Request </button> :
+                                        <button className="joinleavecomm" onClick={() => sendrequest(community).then(getpagerender)}> Request Join Group </button>
+                            }
+                        </div>
+                    }
+                    )
                 }
-                )
-            }
-
+            </div>
             <Link to="./newcommunity" >Create a new Community</Link>
 
         </div>

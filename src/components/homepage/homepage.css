@@ -1,0 +1,23 @@
+.homepagelayout {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 100px;
+}
+
+.eventcontainer {
+    text-align: center;
+    border: 5px grey solid;
+    background-color: whitesmoke;
+    padding: 30px;
+    margin: 17px;
+    overflow-y:auto;
+    height:700px  ;
+}
+
+.eventcontainer:hover {
+    transform: scale(1.1);
+}
+
+Link {
+    text-decoration: none;
+}

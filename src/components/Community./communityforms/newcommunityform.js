@@ -13,8 +13,23 @@ export const CommunityForm = () => {
     const parent = useRef("False")
     const ispublic = useRef("False")
     const history = useHistory()
-
+    const [base64string, setbase] = useState(null)
     const [selectedtags, setselectedtags] = useState([])
+
+
+    const getBase64 = (file, callback) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(file);
+    }
+
+    const createGameImageString = (event) => {
+        getBase64(event.target.files[0], (base64ImageString) => {
+            console.log("Base64 of file is", base64ImageString);
+
+            setbase(base64ImageString)
+        });
+    }
 
     const createacommunity = (e) => {
         e.preventDefault()
@@ -22,6 +37,7 @@ export const CommunityForm = () => {
             "name": name.current.value,
             "about": about.current.value,
             "rules": rules.current.value,
+            "image": base64string,
             "parentportal": parent.current.checked,
             "public": ispublic.current.checked,
             "visible": true
@@ -67,7 +83,7 @@ export const CommunityForm = () => {
                 <input ref={name} type="text" id="communityname" className="form-control" placeholder="Community Name" required />
             </fieldset>
             <fieldset>
-                <input ref={image} type="text" id="communityimage" className="form-control" placeholder="Community Image - optional" />
+                <input type="file" id="userimage" onChange={createGameImageString} />
             </fieldset>
             <fieldset>
                 <input ref={about} type="text" id="communityabout" className="form-control" placeholder="What is your community about" required />

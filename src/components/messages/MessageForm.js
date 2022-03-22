@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { createmessage } from "../requesthandlers/directmessagesmanager"
-import { getMembers} from "../requesthandlers/usermanager"
+import { getMembers } from "../requesthandlers/usermanager"
 
 
 export const MessageForm = () => {
@@ -10,23 +10,23 @@ export const MessageForm = () => {
     const history = useHistory()
     const [base64string, setbase] = useState(null)
 
-    useEffect(()=> {
-        getMembers().then(res=>setusers(res))
+    useEffect(() => {
+        getMembers().then(res => setusers(res))
     }, [])
 
     const handleinput = (event) => {
-        let copy = {...newmessage}
+        let copy = { ...newmessage }
         copy[event.target.id] = event.target.value
         console.log(copy)
         setnewmessage(copy)
     }
 
     const sendmessage = (e) => {
-        let messageobj = {...newmessage}
+        let messageobj = { ...newmessage }
         messageobj["read"] = true
         messageobj["sender"] = localStorage.getItem('member')
         messageobj["image"] = base64string
-        createmessage(messageobj).then(()=> history.push("/messages"))
+        createmessage(messageobj).then(() => history.push("/messages"))
     }
 
     const getBase64 = (file, callback) => {
@@ -49,30 +49,30 @@ export const MessageForm = () => {
 
             <fieldset>
                 <label htmlFor="recipient"> To: </label>
-                <select id="recipient" value={newmessage.recipient} onChange={(e)=>{handleinput(e)}} >
+                <select id="recipient" value={newmessage.recipient} onChange={(e) => { handleinput(e) }} >
                     <option>Select a user</option>
                     {
-                        users.map(each=> {
+                        users.map(each => {
                             return <option value={each.id}>
                                 {each?.user?.username}
-                                </option>
+                            </option>
                         })
                     }
                 </select>
             </fieldset>
             <fieldset>
                 <label htmlFor="lastname"> Title: </label>
-                <input type="text" id="title" className="form-control" onChange={(e)=>{handleinput(e)}} required />
+                <input type="text" id="title" className="form-control" onChange={(e) => { handleinput(e) }} required />
             </fieldset>
             <fieldset>
                 <label htmlFor="lastname"> Content: </label>
-                <input type="text" id="content" className="form-control" onChange={(e)=>{handleinput(e)}} required />
+                <input type="text" id="content" className="form-control" onChange={(e) => { handleinput(e) }} required />
             </fieldset>
             <fieldset>
-                            <input type="file" id="userimage" onChange={createGameImageString} />
-                        </fieldset>
+                <input type="file" id="userimage" onChange={createGameImageString} />
+            </fieldset>
             <fieldset>
-                <button type="button" onClick={()=> sendmessage()} > Send Message </button>
+                <button type="button" onClick={() => sendmessage()} > Send Message </button>
             </fieldset>
         </form>
     </>)

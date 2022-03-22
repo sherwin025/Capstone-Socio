@@ -11,7 +11,7 @@ export const HomePageEvents = ({parent}) => {
 
     return (<> 
     <div className="eventcontainer">
-    {parent ?  "Kids Events" : "Your local Communtiy Events" }
+    {parent ?  <h3>Kids Events</h3>: <h3>Communtiy Events</h3> }
     {
         events.length >= 1? 
         events.map((event)=> {

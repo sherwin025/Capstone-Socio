@@ -11,14 +11,14 @@ export const Announcementshomepage = () => {
 
     return (<> 
     <div className="eventcontainer">
-    Local Community Announcements
+    <h3> Local Community Announcements </h3>
     {
         announ.length >= 1? 
         announ.map((event)=> {
             return event.approved? <div className="indevent">
-                <div className="communitynameevent"><Link to={`./communities/${event.community?.id}`}>{event.community?.name} </Link></div>
                 <div className="homevent"> {event.title}</div>
                 <div className="homevent"> {event.details}</div>
+                <div className="communitynameevent"><Link to={`./communities/${event.community?.id}`}>by: {event.community?.name} </Link></div>
             </div> : ""
         }
         )

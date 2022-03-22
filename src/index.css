@@ -1,4 +1,7 @@
 body {
-    background-color: #17627A
-    ;
+    background-color: lightgray;
+    font-family: "Papyrus";
+    font-smooth: always;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }

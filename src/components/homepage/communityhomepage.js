@@ -11,7 +11,7 @@ export const Communityhomepage = () => {
 
     return (<> 
     <div className="eventcontainer">
-    Your Communities
+    <h3>Your Communities</h3>
     {
         community.length >= 1? 
         community.map((event)=> {

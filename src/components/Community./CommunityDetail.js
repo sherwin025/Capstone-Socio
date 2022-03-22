@@ -1,3 +1,4 @@
+import { Message } from "@material-ui/icons"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { useParams } from "react-router-dom"
@@ -13,7 +14,7 @@ export const CommunityDetails = () => {
     const { communityid } = useParams()
     const [community, setcommunity] = useState({})
     const [members, setmembers] = useState([])
- 
+
     useEffect(() => {
         getpagerender()
     }, [communityid])
@@ -23,12 +24,12 @@ export const CommunityDetails = () => {
     }
 
     const checkjoin = () => {
-        return members.some((member)=>member.member?.id === parseInt(localStorage.getItem("member")))
+        return members.some((member) => member.member?.id === parseInt(localStorage.getItem("member")))
 
     }
 
     const checkmembership = () => {
-        return members.some((member)=>member.member?.id === parseInt(localStorage.getItem("member")) && member.approved === true) 
+        return members.some((member) => member.member?.id === parseInt(localStorage.getItem("member")) && member.approved === true)
     }
 
     const sendrequest = (id) => {
@@ -37,14 +38,14 @@ export const CommunityDetails = () => {
             "community": id,
             "admin": "false",
             "approved": "false"
-        })
+        }).then(getpagerender)
     }
 
     const Cancelcommunityjoin = (id) => {
         return checkcommunitymember(localStorage.getItem("member"), id)
             .then(res => {
                 for (const item of res) {
-                    Deletecommunitymember(item.id)
+                    Deletecommunitymember(item.id).then(getpagerender)
                 }
             })
     }
@@ -66,26 +67,32 @@ export const CommunityDetails = () => {
                 }
 
                 {
-                     checkmembership() ? "" :
-                     checkjoin() ?
-                     <button onClick={() => Cancelcommunityjoin(communityid).then(()=>getpagerender())}> Cancel Request </button> :
-                     <button onClick={() => sendrequest(communityid).then(()=>getpagerender())}> Request Join Group </button> 
+                    checkmembership() ? "" :
+                        checkjoin() ?
+                            <button onClick={() => Cancelcommunityjoin(communityid)}> Cancel Request </button> :
+                            <button onClick={() => sendrequest(communityid)}> Request Join Group </button>
                 }
             </div>
-            <div>
-                <CommunityAnnouncementList communityid={communityid} />
-            </div>
-            <div>
-                <CommunityEventList communityid={communityid} />
-            </div>
-            <div>
-                <MessageBoard communityid={communityid} />
-            </div>
+            {
+                checkmembership() ? <div>
+                    <div>
+                        <CommunityAnnouncementList communityid={communityid} />
+                    </div>
+                    <div>
+                        <CommunityEventList communityid={communityid} />
+                    </div>
+                    <div>
+                        <MessageBoard communityid={communityid} />
+                    </div>
+
+                </div> : "Must be a member to view page "
+
+            }
             <div>
                 Joined Users:
                 {
                     members.map(each => {
-                        return <div> {each.approved ? each.member?.user?.username : ""}</div>
+                        return  each.member?.id === parseInt(localStorage.getItem("member"))  ? <div> {each.member?.user?.username} </div> : <div> {each.approved ? <div> {each.member?.user?.username} <Link to={`/messages/new/${each.id}`}> <Message /></Link> </div> : ""}</div>
                     })
                 }
             </div>
