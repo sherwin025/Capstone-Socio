@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom"
 
 export const NavBar = (props) => {
     const history = useHistory()
-    const admin = localStorage.getItem("admin")
+    const parent = localStorage.getItem("parent")
 
     const logoutuser = () => {
         localStorage.removeItem('token')
@@ -28,9 +28,12 @@ export const NavBar = (props) => {
                 <li className="navbar__item active">
                     <Link className="navbar__link" to="/users">Users </Link>
                 </li>
-                <li className="navbar__item active">
+                {
+                    parent === "true" ? <li className="navbar__item active">
                     <Link className="navbar__link" to="/parents"> Parent Portal</Link>
-                </li>
+                </li> : ""  
+
+                }
                 <li className="navbar__item active">
                     <Link className="navbar__link" to="/messages"> Messages</Link>
                 </li>

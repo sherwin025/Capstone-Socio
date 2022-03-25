@@ -58,43 +58,58 @@ export const CommunityDetails = () => {
 
     return (<>
         <div className="MainContainercomm">
-            <div>
-                <h1> {community?.name}</h1>
-                <h6>members: {community?.member_count}</h6>
+            <div className="commdetailheading">
+                <div>
+                    {community.image ? <div><img className="communityimagedet1" src={`http://localhost:8000${community.image}`}></img></div> : ""}
+                </div>
+                <div>
+                    <h1> {community?.name}</h1>
+                    <h6 className="selfcentered ">members: {community?.member_count}</h6>
 
-                {
-                    checkadmin() ? <Link to={`/communities/${communityid}/admin`}>Community Admin Page</Link> : ""
-                }
+                    {
+                        checkadmin() ? <Link className="selfcentered" to={`/communities/${communityid}/admin`}>Community Admin Page</Link> : ""
+                    }
 
-                {
-                    checkmembership() ? "" :
-                        checkjoin() ?
-                            <button onClick={() => Cancelcommunityjoin(communityid)}> Cancel Request </button> :
-                            <button onClick={() => sendrequest(communityid)}> Request Join Group </button>
-                }
+                    {
+                        checkmembership() ? "" :
+                            checkjoin() ?
+                                <button onClick={() => Cancelcommunityjoin(communityid)}> Cancel Request </button> :
+                                <button onClick={() => sendrequest(communityid)}> Request Join Group </button>
+                    }
+                </div>
+                <div>
+                    {community.image ? <div><img className="communityimagedet2" src={`http://localhost:8000${community.image}`}></img></div> : ""}
+                </div>
             </div>
-            {
-                checkmembership() ? <div>
-                    <div>
-                        <CommunityAnnouncementList communityid={communityid} />
-                    </div>
-                    <div>
-                        <CommunityEventList communityid={communityid} />
-                    </div>
-                    <div>
-                        <MessageBoard communityid={communityid} />
-                    </div>
+            <div className="spacebetween">
+                <div className="detailscomponents">
+                    {
+                        checkmembership() ? <div className="detailscomponents">
+                            <div className="commdetailcompoent">
+                                <CommunityEventList communityid={communityid} />
+                            </div>
+                            <div className="commdetailcompoent">
+                                <CommunityAnnouncementList communityid={communityid} />
+                            </div>
+                            <div >
+                                <div className="commdetailcompoentmessages">
+                                    <MessageBoard communityid={communityid} />
+                                </div>
+                                <div className="commdetailcompoentmessages ">
+                                    <h4>Joined Users:</h4>
+                                    {
+                                        members.map(each => {
+                                            return each.member?.id === parseInt(localStorage.getItem("member")) ? <div> {each.member?.user?.username} </div> : <div> {each.approved ? <div> {each.member?.user?.username} <Link to={`/messages/new/${each.id}`}> <Message /></Link> </div> : ""}</div>
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div> : "Must be a member to view page "
 
-                </div> : "Must be a member to view page "
+                    }
 
-            }
-            <div>
-                Joined Users:
-                {
-                    members.map(each => {
-                        return  each.member?.id === parseInt(localStorage.getItem("member"))  ? <div> {each.member?.user?.username} </div> : <div> {each.approved ? <div> {each.member?.user?.username} <Link to={`/messages/new/${each.id}`}> <Message /></Link> </div> : ""}</div>
-                    })
-                }
+                </div>
+
             </div>
         </div>
 

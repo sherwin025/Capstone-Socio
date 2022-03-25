@@ -107,32 +107,32 @@ export const CommunityEventList = ({ communityid }) => {
             events.length > 0 ?
                 events.map(event => {
                     return event.approved === true ?
-                        <div>
+                        <div className="indeventdetail">
                             <div>{event.name}</div>
                             <div>{event.details}</div>
                             <div>{event.date}</div>
                             <div>{event.time}</div>
                             {event.image ? <div><img src={`http://localhost:8000${event.image}`}></img></div>: ""}
-                            <div>attending count : {event.attending_count}</div>
+                            <div>attending count : {event.attendees.length}</div>
                             <div> {event.member?.id === parseInt(localStorage.getItem("member")) ?
-                                <div>
-                                    <button onClick={() => {
+                                <div className="divflex selfcentered">
+                                    <div onClick={() => {
                                         seteventToEdit(event)
                                         toggleEditModal()
                                     }}>
                                         <Settings />
-                                    </button>
-                                    <button onClick={() => {
+                                    </div>
+                                    <div onClick={() => {
                                         seteventToEdit(event)
                                         toggleDeleteDiag()
                                     }}>
                                         <Delete />
-                                    </button>
+                                    </div>
                                 </div> : ""}
                             </div>
                             <div> {event.member?.id === parseInt(localStorage.getItem("member")) ?
                                 "" :
-                                event.attendees.some((each) =>each.user === parseInt(localStorage.getItem("member"))) ?
+                                event.attendees.some((each) =>each.id === parseInt(localStorage.getItem("member"))) ?
                                     <button onClick={()=>{
                                         leaveEvent(event.id).then(getCommunityEvents(communityid).then(res => setevents(res)))
                                     }}>Leave Event</button> : <button onClick={()=>{
@@ -144,6 +144,6 @@ export const CommunityEventList = ({ communityid }) => {
                 }) :
                 "Currently No Community Events"
         }
-        <div><button><Link to={`/events/new/${communityid}`}>Create a new Event</Link></button></div>
+        <div><Link to={`/events/new/${communityid}`}>Create a new Event</Link></div>
     </>)
 }

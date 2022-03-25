@@ -50,8 +50,12 @@
     flex-wrap: wrap;
 }
 
+.divflex {
+  display: flex;
+  justify-content: space-evenly;
+}
 
-.joinleavecomm {
+button {
   align-items: center;
   appearance: none;
   background-color: #3EB2FD;
@@ -79,6 +83,7 @@
   touch-action: manipulation;
   vertical-align: top;
   white-space: nowrap;
+  margin: 5px;
 }
 
 .joinleavecomm:active,
@@ -92,4 +97,211 @@
 
 .joinleavecomm:focus:not(:active) {
   box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+}
+
+.newcommform {
+  border: 2px solid gray;
+  width: 50vw;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: whitesmoke;
+
+}
+
+.alltagslist {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tagscheckbox {
+  margin: auto;
+  padding: 10px;
+}
+
+.backtocomm {
+  align-items: center;
+  appearance: none;
+  background-color: #db820d;
+  background-image: linear-gradient(1deg, #fddd4f, #e95022 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd,sans-serif;
+  font-size: .7rem;
+  height: auto;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s,background-position .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.backtocomm:active,
+.backtocomm:focus {
+  outline: none;
+}
+
+.backtocomm:hover {
+  background-position: -20px -20px;
+}
+
+.backtocomm:focus:not(:active) {
+  box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+}
+
+.MainContainercomm{
+  display: flex;
+  flex-direction: column;
+}
+
+.commdetailheading {
+  align-self: center;
+  display: flex;
+  margin: 0 15vh;
+}
+
+.detailscomponents {
+  display: flex;
+  justify-content: center;
+}
+
+.commdetailcompoent {
+  width: 25vw;
+  text-align: center;
+  border: 3px grey solid;
+  background-color: whitesmoke;
+  padding: 15px;
+  overflow-y:auto;
+  text-align: center;
+  min-height: 50vh;
+  margin: auto 5vw auto 1vw;
+  max-height: 50vh;
+}
+
+.selfcentered{
+  margin: auto;
+  text-align: center;
+}
+
+.commdetailcompoentmessages {
+  width: 15vw;
+  margin: 2vh auto;
+  text-align: center;
+  border: 3px grey solid;
+  background-color: whitesmoke;
+  padding: 15px;
+  overflow-y:auto;
+  text-align: center;
+  height: 25vh;
+  align-self: right;
+}
+
+.indmessageboard{
+  border: rgb(110, 108, 108) 1px solid;
+  border-radius: 10%;
+  padding: 5px;
+  margin: 5px auto;
+}
+
+.communityimagedet1 {
+  border-radius: 25%;
+  margin: auto 13vw auto 0;
+}
+
+.communityimagedet2 {
+  visibility: hidden;
+}
+
+img {
+  max-width: 16vw;
+  max-height: auto;
+}
+
+.indeventdetail{
+  border: gray 2px solid;
+  border-radius: 10%;
+  margin: 12px;
+  padding: 3%;
+}
+
+.filebutton {
+  align-items: center;
+  appearance: none;
+  background-color: #3EB2FD;
+  background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd,sans-serif;
+  font-size: .7rem;
+  height: auto;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s,background-position .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+  margin: 5px;
+  }
+
+.userprofilelistdetail {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px;
+  border: white 2px solid;
+  padding-top: 5px;
+}
+
+.tinyprofileimage {
+  height: 5vw;
+  width: 5vw;
+  border-radius: 50%;
+  image-rendering: pixelated;
+}
+
+.usercontainerpage{
+  display: flex;
+  justify-content: space-around;
+}
+
+.userlistdetail{
+  width: 25vw;
+  text-align: center;
+  border: 3px grey solid;
+  background-color: rgba(245, 245, 245, 0.712);
+  padding: 15px;
+  overflow-y:auto;
+  text-align: center;
+  min-height: 60vh;
+  margin: auto 5vw auto 1vw;
+  max-height: 60vh;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.userlistdetail::-webkit-scrollbar {
+  display: none;
 }

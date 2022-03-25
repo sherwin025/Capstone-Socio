@@ -30,7 +30,7 @@ export const Login = () => {
                 if ("member" in res && 'token' in res) {
                     localStorage.setItem('token', res.token)
                     localStorage.setItem('member', res.member)
-                    localStorage.setItem('admin', res.admin)
+                    localStorage.setItem('parent', res.parent)
                     localStorage.setItem('last_login', res.last_login)
                     history.push('/')
                 } else {

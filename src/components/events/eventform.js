@@ -63,7 +63,7 @@ export const EventForm = () => {
                 <input ref={name} type="text" id="communityname" className="form-control" placeholder="Event Name" required />
             </fieldset>
             <fieldset>
-                <input type="file" id="image" onChange={createGameImageString} />
+                <input className="filebutton" type="file" id="image" onChange={createGameImageString} />
             </fieldset>
             <fieldset>
                 <input ref={details} type="text" id="communityabout" className="form-control" placeholder="Event Details" required />
@@ -92,7 +92,7 @@ export const EventForm = () => {
                 <button onClick={CreateEvent}> Create Event </button>
             </fieldset>
         </form>
-        <button onClick={() => history.push(`/communities/${communityid}`)}> Back to Community</button>
+        <button className="backtocomm" onClick={() => history.push(`/communities/${communityid}`)}> Back to Community</button>
 
     </>)
 }

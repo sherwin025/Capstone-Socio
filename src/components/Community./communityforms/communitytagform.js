@@ -39,16 +39,21 @@ export const NewCommunityTagComponent = ({selectedtags,setselectedtags}) => {
     }
 
     return <>
+   
         <label htmlFor="parent"> Selected associated tags </label>
+        <div className="alltagslist">
         {
             tags.map(tag => {
-                return <div>
+                return <div className="tagscheckbox">
                     <label htmlFor="thetags"> {tag.label}</label>
-                    <input type="checkbox" id="communitytags" className="form-control" onChange={() => addselectedtags(tag)} />
+                    <input type="checkbox" id="communitytags" onChange={() => addselectedtags(tag)} />
                 </div>
             })
         }
-        <input ref={newtag} type="text" id="communityrules" className="form-control" placeholder="New Tag Label" />
-        <button onClick={addtagstolist} >Create Tag</button>
+         </div>
+        <input ref={newtag} type="text" id="communityrules" className="searchbox" placeholder="New Tag Label" />
+        <button className="joinleavecomm" onClick={addtagstolist} >Create Tag</button>
+       
+
     </>
 }

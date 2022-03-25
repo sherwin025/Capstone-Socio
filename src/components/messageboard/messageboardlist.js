@@ -33,7 +33,7 @@ export const MessageBoard = ({communityid}) => {
     }
 
     return (<>
-        messageboard:
+        <h4>Message Board:</h4>
 
         <Dialog
             className="edit-dialog"
@@ -45,23 +45,23 @@ export const MessageBoard = ({communityid}) => {
                 <Input className="edit-event-input" id="content" type="text" onChange={handleInput}></Input>
 
                 <div className="edit-event-btns">
-                    <div className="edit-event-btn save"><Button className="edit-event-btn save" variant="outlined" onClick={sendmessage}>Send</Button></div>
-                    <div className="edit-event-btn cancel"><Button className="edit-event-btn cancel" variant="outlined" onClick={(togglemessageModal)}>Cancel</Button></div>
+                    <div className="edit-event-btn save"><button className="edit-event-btn save" variant="outlined" onClick={sendmessage}>Send</button></div>
+                    <div className="edit-event-btn cancel"><button className="edit-event-btn cancel" variant="outlined" onClick={(togglemessageModal)}>Cancel</button></div>
                 </div>
             </DialogContent>
         </Dialog>
 
 
+        <button onClick={togglemessageModal}> Add Message</button>
         {
             messages.length > 0 ?
                 messages.map(message => {
-                    return <div>
+                    return <div className="indmessageboard">
                         <div>{message.content}</div>
                         <div>by: {message.member?.user?.username}</div>
                     </div>
                 }) :
                 "Currently No Community messages"
         }
-        <button onClick={togglemessageModal}> Add Message</button>
     </>)
 }

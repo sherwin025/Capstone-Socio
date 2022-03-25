@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react"
 import { getMembers, getSpecificMembers, UpdateMember } from "../requesthandlers/usermanager"
-import { Edit, Message } from "@material-ui/icons";
+import { AirlineSeatLegroomReducedSharp, Edit, Message } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 
 export const UserPage = () => {
     const [allmembers, setallmembers] = useState([])
     const [myprofile, setmyprofile] = useState({})
     const [editstate, seteditstate] = useState(false)
     const [base64string, setbase] = useState(null)
+    const [viewprofile, setviewprofile] = useState({})
+
+    const [profileModal, setprofileModal] = useState(false)
+    const toggleprofileModal = () => setprofileModal(!profileModal)
+
 
     useEffect(() => {
         getMembers().then(res => setallmembers(res))
@@ -44,22 +50,52 @@ export const UserPage = () => {
             "image": base64string
         }).then(() => {
             getSpecificMembers(parseInt(localStorage.getItem('member'))).then(res => setmyprofile(res))
+            getMembers().then(res => setallmembers(res))
             seteditstate(false)
         })
     }
 
+    const storetheprofile = (member) => {
+        setviewprofile(member)
+        toggleprofileModal()
+    }
+
     return (<>
-        <div className="usercontainer">
-            <div>
-                All Users:
+        <div className="usercontainerpage">
+
+            <Dialog
+                className="edit-dialog"
+                open={profileModal}
+                onClose={toggleprofileModal}
+            >
+                <DialogTitle className="edit-event-title">{viewprofile.user?.username}</DialogTitle>
+                <DialogContent className="edit-event-content">
+                    <div>
+                        {
+                            viewprofile? <div>
+                            {viewprofile.image ? <div><img src={`http://localhost:8000${viewprofile.image}`}></img></div> : ""}
+                            <div>{viewprofile.user?.first_name} {viewprofile.user?.last_name}</div>
+                            <div>{viewprofile.details}</div>
+                            <div>{viewprofile.parent ? "Parent" : ""}</div>
+                            <div><div> {viewprofile.id === myprofile.id ? "" : <Link to={`/messages/new/${viewprofile.id}`}> <Message /></Link>} </div></div>
+                            </div>: ""
+                        }
+                    </div>
+                    <div className="edit-event-btns">
+                        <div className="edit-event-btn cancel"><button className="edit-event-btn cancel" variant="outlined" onClick={(toggleprofileModal)}>Close</button></div>
+                    </div>
+                </DialogContent>
+            </Dialog>
+
+
+            <div className="userlistdetail">
+                <h3>All Users:</h3>
                 {
                     allmembers.map(member => {
-                        return <div>
-                            <div><div>{member.user?.username}</div> <div> {member.id === myprofile.id ? "" : <Link to={`/messages/new/${member.id}`}> <Message /></Link>} </div></div>
-                           { member.image? <div><img src={`http://localhost:8000${member.image}`}></img></div> : ""}
+                        return <div className="userprofilelistdetail" onClick={() => { storetheprofile(member) }}>
+                            {member.image ? <div><img className="tinyprofileimage" src={`http://localhost:8000${member.image}`}></img></div> : ""}
                             <div>{member.user?.first_name} {member.user?.last_name}</div>
-                            <div>{member.details}</div>
-                            <div>{member.parent ? "Parent" : ""}</div>
+                            <div><div> {member.id === myprofile.id ? "" : <Link to={`/messages/new/${member.id}`}> <Message /></Link>} </div></div>
 
                         </div>
                     })
@@ -68,20 +104,20 @@ export const UserPage = () => {
             </div>
             <div>
                 {
-                    editstate ? <div>
+                    editstate ? <div className="userlistdetail">
                         <div> <div>{myprofile.user?.username}</div></div>
                         <fieldset>
                             <label htmlFor="profileimage"> Profile Image </label>
-                            <input type="file" id="userimage" onChange={createGameImageString} />
+                           <button><input type="file" id="userimage" onChange={createGameImageString} /></button>
                         </fieldset>
 
                         <div>{myprofile.user?.first_name} {myprofile.user?.last_name}</div>
                         <input id="details" placeholder={myprofile.details} onChange={handlechangeinfo} />
                         <button onClick={() => savechanges()}>Save Changes</button>
-                    </div> : <div>
-                        "My Profile"
+                    </div> : <div className="userlistdetail">
+                        <h3> My Profile</h3>
                         <div> <div>{myprofile.user?.username}</div></div>
-                        {myprofile.image ? <div><img src={`http://localhost:8000${myprofile.image}`}></img></div>: ""}
+                        {myprofile.image ? <div><img src={`http://localhost:8000${myprofile.image}`}></img></div> : ""}
                         <div>{myprofile.user?.first_name} {myprofile.user?.last_name}</div>
                         <div>{myprofile.details}</div>
                         <div>{myprofile.parent ? "Parent" : ""}</div>

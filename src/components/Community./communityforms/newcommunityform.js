@@ -4,6 +4,8 @@ import { CreateCommunity } from "../../requesthandlers/communitymanager"
 import { createcommunitymember } from "../../requesthandlers/communitymembermanager"
 import { createCommunityTags, createTags, getTags } from "../../requesthandlers/tagmanager"
 import { NewCommunityTagComponent } from "./communitytagform"
+import "../community.css"
+
 
 export const CommunityForm = () => {
     const name = useRef()
@@ -44,7 +46,7 @@ export const CommunityForm = () => {
         }
         return CreateCommunity(commobject).then(res => {
 
-            createcommunitymember({"member": localStorage.getItem("member"), "community": res.id, "admin": true, "approved": true})
+            createcommunitymember({ "member": localStorage.getItem("member"), "community": res.id, "admin": true, "approved": true })
 
             for (const tag of selectedtags) {
                 if (tag.id) {
@@ -76,14 +78,14 @@ export const CommunityForm = () => {
     }
 
     return <>
-        <form>
+        <form className="newcommform">
             <h3> Create a new Community </h3>
 
             <fieldset >
                 <input ref={name} type="text" id="communityname" className="form-control" placeholder="Community Name" required />
             </fieldset>
             <fieldset>
-                <input type="file" id="userimage" onChange={createGameImageString} />
+                <input  className="filebutton" type="file" id="userimage" onChange={createGameImageString} />
             </fieldset>
             <fieldset>
                 <input ref={about} type="text" id="communityabout" className="form-control" placeholder="What is your community about" required />
@@ -103,10 +105,10 @@ export const CommunityForm = () => {
                 <NewCommunityTagComponent selectedtags={selectedtags} setselectedtags={setselectedtags} />
             </fieldset>
             <fieldset>
-                <button onClick={createacommunity}> Create your Community </button>
+                <button className="joinleavecomm" onClick={createacommunity}> Create your Community </button>
             </fieldset>
+            <button className="backtocomm" onClick={() => history.push("./communities")}> Back to Communtities </button>
         </form>
-        <button onClick={() => history.push("./communities")}> Back to Communtities </button>
 
 
 

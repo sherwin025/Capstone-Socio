@@ -12,7 +12,7 @@ export const ActivityList = () => {
 
     return (<>
         <div className="eventcontainer">
-            Kids Activities
+           <h3> Kids Activities </h3>
             {
                 events.length >= 1 ?
                     events.map((event) => {
@@ -24,10 +24,10 @@ export const ActivityList = () => {
                             <div>attending: {event.attending_count}</div>
                             <div> {event.member?.id === parseInt(localStorage.getItem("member")) ?
                                 "" :
-                                event.attendees.some((each) => each.user === parseInt(localStorage.getItem("member"))) ?
-                                    <button onClick={() => {
+                                event.attendees.some((each) =>each.id === parseInt(localStorage.getItem("member"))) ?
+                                    <button onClick={()=>{
                                         leaveEvent(event.id).then(getCommunityEvents(event.community?.id).then(res => setevents(res)))
-                                    }}>Leave Event</button> : <button onClick={() => {
+                                    }}>Leave Event</button> : <button onClick={()=>{
                                         joinEvent(event.id).then(getCommunityEvents(event.community?.id).then(res => setevents(res)))
                                     }}>Join Event</button>
                             }</div>

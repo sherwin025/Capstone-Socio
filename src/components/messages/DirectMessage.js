@@ -4,13 +4,14 @@ import { Link } from "react-router-dom"
 import { getMessages } from "../requesthandlers/directmessagesmanager"
 import { getMembers } from "../requesthandlers/usermanager"
 import { Button, Dialog, DialogContent, DialogTitle, Input } from "@material-ui/core";
+import "./messages.css"
 
 export const DirectMessaages = () => {
     const [users, setusers] = useState([])
     const [messages, setmessages] = useState([])
-    const [messagedetail, setmessagedetail] = useState({})
     const [messageModal, setmessageModal] = useState(false)
-    const [thesender, setthesender] = useState(false)
+    const [threaduser, setthreaduser] = useState({})
+    const [allmessagesthread, setallmessagesthread] = useState([])
     const togglemessageModal = () => setmessageModal(!messageModal)
 
     useEffect(() => {
@@ -18,13 +19,29 @@ export const DirectMessaages = () => {
         getMessages().then(res => setmessages(res))
     }, [])
 
-    const handlemessageinput = (message) => {
-        if (message.sender?.id === parseInt(localStorage.getItem("member"))) {
-            setthesender(true)
-        }
-        setmessagedetail(message)
-        togglemessageModal()
 
+    const handlemessageinput = (userobj) => {
+        let copy = [...allmessagesthread]
+        for (const message of messages) {
+            if (message.sender?.id === userobj.id || message.recipient?.id === userobj.id) {
+                copy.push(message)
+                setallmessagesthread(copy)
+            }
+        }
+        setthreaduser(userobj)
+        togglemessageModal()
+    }
+
+    const clearall = () => {
+        setallmessagesthread([])
+        togglemessageModal()
+    }
+
+    const userswithmessages = () => {
+        const relationships = users.filter((user) => {
+            return messages.some(each => each.recipient?.id === user.id || each.sender?.id === user.id)
+        })
+        return relationships
     }
 
     return (<>
@@ -32,42 +49,34 @@ export const DirectMessaages = () => {
             <Dialog
                 className="edit-dialog"
                 open={messageModal}
-                onClose={togglemessageModal}
+                onClose={clearall}
             >
-                <DialogTitle className="edit-event-title">Conversation with { thesender? messagedetail.recipient?.user?.username : messagedetail.sender?.user?.username}</DialogTitle>
+                <DialogTitle className="edit-event-title">Conversation with {threaduser.user?.username}</DialogTitle>
                 <DialogContent className="edit-event-content">
-                    <div className="edit-event-input" id="content" type="text" >Title: {messagedetail.title} </div>
-                    <div className="edit-event-input" id="content" type="text" >Message: {messagedetail.content} </div>
-                    <div>{ messagedetail.image ? <img src={`http://localhost:8000${messagedetail.image}`}></img>:""}</div>
-                    <Link to={`/messages/new/${messagedetail.recipient?.id}`}><button>Reply to this Message</button></Link>
+                    {
+                        allmessagesthread.map(messagedetail => <div>
+                            <div> {messagedetail.sender?.id === parseInt(localStorage.getItem('member')) ? <div> To: {messagedetail.recipient?.user?.username} </div> : <div> From: {messagedetail.sender?.user?.username} </div>}</div>
+                            <div className="edit-event-input" id="content" type="text" >Title: {messagedetail.title} </div>
+                            <div className="edit-event-input" id="content" type="text" >Message: {messagedetail.content} </div>
+                            <div>{messagedetail.image ? <img src={`http://localhost:8000${messagedetail.image}`}></img> : ""}</div>
+                            {
+                                <div> {messagedetail.sender?.id === parseInt(localStorage.getItem('member')) ? "" : <Link to={`/messages/new/${messagedetail.sender?.id}`}><button>Reply to this Message</button></Link>}</div>
+                            }
+                        </div>)
+                    }
                 </DialogContent>
             </Dialog>
 
 
             <Link to="/messages/new"> <button> New Message</button></Link>
         </div>
-        <div>
-            Inbox:
-            {
-                messages.map(
-                    (message) => {
-                        return message.recipient?.id === parseInt(localStorage.getItem("member")) ? <div onClick={() => handlemessageinput(message)}> <div>{message.title}</div> <div>From: {message.sender?.user?.username}</div></div> : ""
-                    }
-                )
-            }
 
-        </div>
-        <div>
-            Outbox:
+        <div className="mainmessages">
+            <h3>Message Threads</h3>
             {
-                messages.map(
-                    (message) => {
-                        return message.sender?.id === parseInt(localStorage.getItem("member")) ? <div onClick={() => handlemessageinput(message)}> <div>{message.title}</div> <div>To: {message.recipient?.user?.username}</div></div> : ""
-                    }
-                )
+                userswithmessages().map(each => { return  parseInt(localStorage.getItem('member')) === each.id ? "" : <div onClick={()=> handlemessageinput(each)}><h5>{each.user?.username}</h5></div> })
             }
         </div>
-
 
     </>)
 

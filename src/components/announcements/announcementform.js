@@ -53,7 +53,7 @@ export const AnnouncementForm = () => {
             <h3> New Announcement </h3>
             <h6>all announcements posted pending approval  </h6>
             <fieldset>
-                <input type="file" id="userimage" onChange={createGameImageString} />
+                <input className="filebutton" type="file" id="userimage" onChange={createGameImageString} />
             </fieldset>
             <fieldset >
                 <input ref={title} type="text" id="communityname" className="form-control" placeholder="Title" required />
@@ -76,7 +76,7 @@ export const AnnouncementForm = () => {
                 <button onClick={CreateAnnouncement}> Create Announcement </button>
             </fieldset>
         </form>
-        <button onClick={() => history.push(`/communities/${communityid}`)}> Back to Community</button>
+        <button className="backtocomm" onClick={() => history.push(`/communities/${communityid}`)}> Back to Community</button>
 
     </>)
 }

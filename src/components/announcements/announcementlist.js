@@ -134,8 +134,8 @@ export const CommunityAnnouncementList = ({ communityid }) => {
                 <Label /> Add Comment
                 <Input className="edit-event-input" id="thecommentdetails" type="text" onChange={handlecommentInput}> </Input>
 
-                <div className="edit-tag-btn cancel"><Button variant="outlined" onClick={()=>addnewcomment(announcementtosee.id)}>Comment</Button></div>
-                <div className="edit-tag-btn cancel"><Button variant="outlined" onClick={togglecomments}>Close</Button></div>
+                <div className="edit-tag-btn cancel"><button variant="outlined" onClick={()=>addnewcomment(announcementtosee.id)}>Comment</button></div>
+                <div className="edit-tag-btn cancel"><button variant="outlined" onClick={togglecomments}>Close</button></div>
             </DialogContent>
 
         </Dialog>
@@ -147,7 +147,7 @@ export const CommunityAnnouncementList = ({ communityid }) => {
             Announcements.length > 0 ?
                 Announcements.map(Announcement => {
                     return Announcement.approved === true ?
-                        <div>
+                        <div className="indeventdetail">
                             <div>{Announcement.name}</div>
                             <div>{Announcement.title}</div>
                             <div>{Announcement.details}</div>
@@ -157,19 +157,19 @@ export const CommunityAnnouncementList = ({ communityid }) => {
                                 togglecomments()
                             }}>comments</button> : ""}</div>
                             <div> {Announcement.member?.id === parseInt(localStorage.getItem("member")) ?
-                                <div>
-                                    <button onClick={() => {
+                                <div className="divflex">
+                                    <div onClick={() => {
                                         setannouncementToEdit(Announcement)
                                         toggleEditModal()
                                     }}>
                                         <Settings />
-                                    </button>
-                                    <button onClick={() => {
+                                    </div>
+                                    <div onClick={() => {
                                         setannouncementToEdit(Announcement)
                                         toggleDeleteDiag()
                                     }}>
                                         <Delete />
-                                    </button>
+                                    </div>
                                 </div> : ""}
                             </div>
                         </div>
@@ -177,6 +177,6 @@ export const CommunityAnnouncementList = ({ communityid }) => {
                 }) :
                 "Currently No Community Announcements"
         }
-        <div><button><Link to={`/announcements/new/${communityid}`}>Create a new Announcement</Link></button></div>
+        <div><div><Link to={`/announcements/new/${communityid}`}>Create a new Announcement</Link></div></div>
     </>)
 }
